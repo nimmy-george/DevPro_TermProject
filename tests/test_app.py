@@ -2,7 +2,7 @@
 
 import pytest
 from flask import Flask
-from your_app_module.app import init_db, create_app
+from app.app import init_db, create_app
 
 @pytest.fixture
 def app():
