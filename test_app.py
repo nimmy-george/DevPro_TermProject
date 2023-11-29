@@ -1,6 +1,5 @@
 import unittest
 from app import app, home, add_user
-import numpy as np
 
 class TestWebApp(unittest.TestCase):
     def client():
