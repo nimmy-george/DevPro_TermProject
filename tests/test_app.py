@@ -14,7 +14,7 @@ def client():
 
 def test_home_route(client):
     response = client.get('/')
-    assert b'Welcome to the Home Page' in response.data
+    assert b'Member List' in response.data
 
 def test_add_user(client):
     response = client.post('/add_user', data={'username': 'Nimmy', 'email': 'c0872805@mylambton.ca'})
