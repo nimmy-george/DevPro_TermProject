@@ -14,9 +14,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt  
     - name: Run tests and generate report
-      run: |
-        pytest tests --junitxml=test-results/junit.xml
-      working-directory: ${{ github.workspace }}
+        run: |
+          pytest tests --junitxml=test-results/junit.xml
+        working-directory: ${{ github.workspace }}
 
     - name: Archive test results
         uses: actions/upload-artifact@v2
