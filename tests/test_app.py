@@ -1,34 +1,22 @@
 # tests/test_app.py
 
 import pytest
-from flask import Flask
-from app.app import init_db, create_app
+from app.app import app, init_db
 
 @pytest.fixture
-def app():
-    test_app = create_app()
+def client():
+    test_app = app
     test_app.config['TESTING'] = True
-    return test_app
+    with test_app.test_client() as client:
+        # Initialize the database before each test
+        init_db()
+        yield client
 
-@pytest.fixture
-def client(app):
-    return app.test_client()
-
-@pytest.fixture
-def database(app):
-    init_db()
-    yield
-    # Clean up the test database after each test
-    with app.app_context():
-        conn = app.database.connect()
-        conn.execute('DROP TABLE IF EXISTS users')
-        conn.close()
-
-def test_home_route(client, database):
+def test_home_route(client):
     response = client.get('/')
     assert b'Member List' in response.data
 
-def test_add_user(client, database):
+def test_add_user(client):
     # Assuming you have an add_user route
     response = client.post('/add_user', data={'username': 'Nimmy', 'email': 'c0872805@mylambton.ca'})
     assert response.status_code == 302  # Assuming a redirect after adding a user
