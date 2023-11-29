@@ -1,24 +1,33 @@
-name: Python Unit Tests
-on: [push, pull_request]
+name: Python test
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x' # Choose your desired Python version
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt  
-    - name: Run tests and generate report
-      run: |
-        pytest tests --junitxml=test-results/junit.xml
-      working-directory: ${{ github.workspace }}
 
-    - name: Archive test results
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests and generate report
+        run: |
+          pytest tests --junitxml=test-results/junit.xml
+        working-directory: ${{ github.workspace }}
+
+      - name: Archive test results
         uses: actions/upload-artifact@v2
         with:
           name: test-results
