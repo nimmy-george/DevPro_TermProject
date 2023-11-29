@@ -14,7 +14,7 @@ def client():
 
 def test_home_route(client):
     response = client.get('/')
-    assert b'Member List' in response.data
+    assert b'User List' in response.data
 
 def test_add_user(client):
     # Assuming you have an add_user route
