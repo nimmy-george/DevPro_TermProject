@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy.model import Model
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Use the same SQLite database
@@ -11,7 +12,7 @@ class User(db.Model):
     email = db.Column(db.String(120), nullable=False)
 
 # Database initialization
-def init_db():
+def init_db() -> None:
     with app.app_context():  # Set up the application context
         db.create_all()
 
