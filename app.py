@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_sqlalchemy.model import Model
+from flask_sqlalchemy import SQLAlchemy  # type: ignore
+from flask_sqlalchemy.model import Model  # type: ignore
+from typing import List
+from flask import Response
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -21,7 +23,7 @@ def home() -> str:
     return render_template('index.html', users=users)
 
 @app.route('/add_user', methods=['POST'])
-def add_user() -> str:
+def add_user() -> Response:
     username: str = request.form['username']
     email: str = request.form['email']
 
