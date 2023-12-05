@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy  # type: ignore
 from flask_sqlalchemy.model import Model  # type: ignore
+from flask_sqlalchemy import SQLAlchemy, Model
 from typing import List
 from flask import Response
 
@@ -8,7 +9,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
-class User(db.Model):
+class User(Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), nullable=False)
@@ -18,7 +19,7 @@ def init_db() -> None:
         db.create_all()
 
 @app.route('/')
-def home() -> str:
+def home() -> Response:
     users: List[User] = User.query.all()
     return render_template('index.html', users=users)
 
