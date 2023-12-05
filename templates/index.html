@@ -1,81 +1,18 @@
+<!-- templates/index.html -->
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevPro Web App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff; /* Light Blue */
-            margin: 20px;
-        }
-    
-        h1, h2 {
-            color: #333;
-        }
-    
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-    
-        li {
-            margin-bottom: 10px;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    
-        form {
-            margin-top: 20px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
-    
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-    
-        button {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
-    
+    <title>Redis Data Storage</title>
 </head>
 <body>
-    <h1>Member List</h1>
-    <ul>
-        {% for user in users %}
-            <li>{{ user[1] }} - {{ user[2] }}</li>
-        {% endfor %}
-    </ul>
-
-    <h2>Add User</h2>
-    <form method="post" action="/add_user">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <button type="submit">Add User</button>
+    <h1>Store Data in Redis</h1>
+    <form action="/store_data" method="post">
+        <label for="key">Key:</label>
+        <input type="text" id="key" name="key" required><br><br>
+        <label for="value">Value:</label>
+        <input type="text" id="value" name="value" required><br><br>
+        <button type="submit">Store Data</button>
     </form>
 </body>
 </html>
