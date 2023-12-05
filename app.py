@@ -32,4 +32,4 @@ def add_user() -> str:
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, port=4000)
+    app.run(debug=False, port=4000)
