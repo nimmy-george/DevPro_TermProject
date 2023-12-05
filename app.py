@@ -1,34 +1,33 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy  # type: ignore
-from flask_sqlalchemy.model import Model  # type: ignore
-from flask_sqlalchemy import SQLAlchemy, Model
-from typing import List
-from flask import Response
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Use the same SQLite database
 db = SQLAlchemy(app)
 
-class User(Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), nullable=False)
 
-def init_db() -> None:
-    with app.app_context():
+# Database initialization
+def init_db():
+    with app.app_context():  # Set up the application context
         db.create_all()
 
+# Route for the home page
 @app.route('/')
-def home() -> Response:
-    users: List[User] = User.query.all()
+def home():
+    users = User.query.all()
     return render_template('index.html', users=users)
 
+# Route for adding a new user
 @app.route('/add_user', methods=['POST'])
-def add_user() -> Response:
-    username: str = request.form['username']
-    email: str = request.form['email']
+def add_user():
+    username = request.form['username']
+    email = request.form['email']
 
-    new_user: User = User(username=username, email=email)
+    new_user = User(username=username, email=email)
     db.session.add(new_user)
     db.session.commit()
 
@@ -36,4 +35,5 @@ def add_user() -> Response:
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=False, port=4000)
+    app.run(debug=True, port=4000)
+
