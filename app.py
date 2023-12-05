@@ -1,13 +1,8 @@
-import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-
-# Use an absolute path for the SQLite database
-project_dir = os.path.dirname(os.path.abspath(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(project_dir, "database.db")}'
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Use the same SQLite database
 db = SQLAlchemy(app)
 
 class User(db.Model):
@@ -17,7 +12,8 @@ class User(db.Model):
 
 # Database initialization
 def init_db():
-    db.create_all()
+    with app.app_context():  # Set up the application context
+        db.create_all()
 
 # Route for the home page
 @app.route('/')
@@ -40,3 +36,4 @@ def add_user():
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=4000)
+
