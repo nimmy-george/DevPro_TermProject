@@ -1,33 +1,39 @@
-# app.py
-
-from flask import Flask, render_template, request, jsonify
-import redis
+from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-redis_db = redis.StrictRedis(host='localhost', port=6379, db=0)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Use the same SQLite database
+db = SQLAlchemy(app)
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+
+# Database initialization
+def init_db():
+    with app.app_context():  # Set up the application context
+        db.create_all()
+
+# Route for the home page
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
-@app.route('/store_data', methods=['POST'])
-def store_data():
-    key = request.form['key']
-    value = request.form['value']
-    if key and value:
-        redis_db.set(key, value)
-        return jsonify({'message': 'Data stored successfully'})
-    else:
-        return jsonify({'error': 'Key or value is missing'})
+# Route for adding a new user
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    username = request.form['username']
+    email = request.form['email']
 
-@app.route('/retrieve/<key>', methods=['GET'])
-def retrieve_data(key):
-    value = redis_db.get(key)
-    if value:
-        return jsonify({key: value.decode('utf-8')})
-    else:
-        return jsonify({'error': 'Key not found'})
+    new_user = User(username=username, email=email)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    init_db()
+    app.run(debug=True, port=4000)
 
