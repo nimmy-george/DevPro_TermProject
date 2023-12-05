@@ -13,11 +13,11 @@ class TestApp(unittest.TestCase):
         init_db()
 
     def tearDown(self):
-        # Remove the application context after the test is done
-        self.app_context.pop()
         # Clean up the database
         db.session.remove()
         db.drop_all()
+        # Remove the application context after the test is done
+        self.app_context.pop()
 
     def test_home_page(self):
         response = self.app.get('/')
