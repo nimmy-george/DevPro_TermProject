@@ -3,16 +3,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redis Data Storage</title>
+    <title>DevPro Web App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Light Blue */
+            margin: 20px;
+        }
+    
+        h1, h2 {
+            color: #333;
+        }
+    
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    
+        li {
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        form {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+    
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+    
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Store Data in Redis</h1>
+    <h1>Member List</h1>
     <form action="/store_data" method="post">
-        <label for="key">Key:</label>
+        <label for="key">Email ID:</label>
         <input type="text" id="key" name="key" required><br><br>
-        <label for="value">Value:</label>
+        <label for="value">Name:</label>
         <input type="text" id="value" name="value" required><br><br>
-        <button type="submit">Store Data</button>
+        <button type="submit">Add Membr</button>
     </form>
 </body>
 </html>

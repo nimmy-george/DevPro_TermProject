@@ -1,0 +1,6 @@
+flask==2.0.3
+matplotlib
+numpy
+redis
+Werkzeug==2.0.3
+requests  
