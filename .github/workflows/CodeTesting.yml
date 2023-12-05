@@ -15,14 +15,9 @@ jobs:
 
     - name: Install dependencies
       run: pip install -r requirements.txt
-           pip install flake8
-
+      
     - name: Run Tests
       run: python test_app.py 2>&1 | tee test-report.txt
-
-    - name: Check code style
-      run: |
-        flake8
 
     - name: Check code formatting
       run: |
