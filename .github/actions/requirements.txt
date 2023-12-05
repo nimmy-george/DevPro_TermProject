@@ -1,6 +1,5 @@
-flask==2.0.3
-matplotlib
-numpy
-redis
-Werkzeug==2.0.3
-requests  
+Werkzeug>=3.0.0
+requests
+Flask==3.0.0
+Flask-SQLAlchemy==3.0.0
+SQLAlchemy==1.4.22
