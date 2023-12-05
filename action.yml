@@ -1,0 +1,16 @@
+name: 'Install Python Dependencies'
+description: 'GitHub Action to install Python dependencies using PIP'
+author: 'DevPro'
+inputs:
+  requirements-file:
+    description: 'Path to the requirements file'
+    required: true
+    default: 'requirements.txt'
+
+runs:
+  using: 'docker'
+  image: 'python:3.12'
+
+branding:
+  icon: 'package'
+  color: 'blue'
