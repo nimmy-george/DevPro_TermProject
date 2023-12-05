@@ -1,3 +1,6 @@
-Flask
-pytest
-flake8
+flask
+matplotlib
+numpy
+redis
+Werkzeug==2.0.3
+requests
