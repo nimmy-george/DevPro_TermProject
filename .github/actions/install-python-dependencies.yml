@@ -17,3 +17,6 @@ steps:
   - name: Install dependencies
     run: |
       python -m pip install -r ${{ inputs.requirement-file }}
+      pip install black
+      pip install bandit
+      pip install mypy
