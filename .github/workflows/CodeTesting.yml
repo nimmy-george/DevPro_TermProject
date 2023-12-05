@@ -15,9 +15,7 @@ jobs:
 
     # #Using CUSTOM ACTIONS to install the requirements namely Python modules
     - name: Install dependencies
-      uses: ./  
-      with:
-        requirements-file: 'requirements.txt' 
+      uses: ./.github/actions/install-dependencies
       
     - name: Run Tests
       run: python test_app.py 2>&1 | tee test-report.txt
