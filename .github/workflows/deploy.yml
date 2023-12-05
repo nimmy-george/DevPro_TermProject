@@ -1,0 +1,25 @@
+name: Deploy
+
+on: [push, pull_request]
+
+jobs:
+  PackageMgtAndServiceContainers:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REGISTRY: docker.pkg.github.com
+      DOCKER_USERNAME: nimmy-george
+      DOCKER_IMAGE: devpro_termproject/dockerimage
+      DOCKER_TAG: version
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Configure Docker registry
+        run: |
+          echo "${{ secrets.DOCKER_REGISTRY_TOKEN }}" | docker login -u "${DOCKER_USERNAME}" --password-stdin "${DOCKER_REGISTRY}"
+     
+      - name: Run Integration Tests
+        run: |
+          docker pull "${DOCKER_REGISTRY}/${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}"
+          docker run -it "${DOCKER_REGISTRY}/${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}" python -m unittest discover -s ./ -p 'test_app.py' 2>&1 | tee TestReportC.txt
+    
