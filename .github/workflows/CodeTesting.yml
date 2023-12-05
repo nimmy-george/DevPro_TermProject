@@ -37,7 +37,7 @@ jobs:
         name: test-report
         path: test-report.txt
 
-  deploy:
+  deploy_staging:
     runs-on: ubuntu-latest
     needs: test
     env:
@@ -56,5 +56,10 @@ jobs:
       - name: Run Integration Tests
         run: |
           docker pull "${DOCKER_REGISTRY}/${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}"
-          docker run -it "${DOCKER_REGISTRY}/${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}" python -m unittest discover -s ./ -p 'test_app.py' 2>&1 | tee TestReportC.txt
-    
+          docker run -it "${DOCKER_REGISTRY}/${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}" python -m unittest discover -s ./ -p 'test_app.py' 2>&1 | tee TestReportStaging.txt
+      
+      - name: Archive test report
+        uses: actions/upload-artifact@v2
+        with:
+         name: TestReportStaging
+         path: TestReportStaging.txt
