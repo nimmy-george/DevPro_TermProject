@@ -1,37 +1,31 @@
-name: Python Test
+name: Unit Test and Build Checks
 
-on:
-  push:
-    branches:
-      - main
+on: [push, pull_request]
+
+# declaring global env variables
+env:
+  USERNAME: ${{ github.repository_owner }}
+  REPOSITORY: ${{ github.event.repository.name }}
+
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  code_testing:
+      runs-on: ubuntu-latest
 
-    env:
-      PYTHONPATH: ${{ github.workspace }}
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        - name: Install dependencies
+          run: pip install -r requirements.txt
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
+        - name: Run Tests
+          run: python test_app.py 2>&1 | tee test-report.txt
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        - name: Archive test report
+          uses: actions/upload-artifact@v2
+          with:
+            name: test-report
+            path: test-report.txt
 
-      - name: Run tests and generate report
-        run: |
-          pytest tests --junitxml=test-results/junit.xml
-        working-directory: ${{ github.workspace }}
-
-      - name: Archive test results
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-results
-          path: test-results
+     
