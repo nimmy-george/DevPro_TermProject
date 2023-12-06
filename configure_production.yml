@@ -14,8 +14,8 @@
         name: "{{ item }}"
         state: present
       loop:
-        - package1
-        - package2
+        - apache2
+        - nginx
       when: ansible_os_family == 'Debian'
 
     - name: Ensure 'wheel' Group Exists
