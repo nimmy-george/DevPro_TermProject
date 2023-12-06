@@ -36,5 +36,5 @@ jobs:
       - name: Archive test report
         uses: actions/upload-artifact@v2
         with:
-         name: TestReportProduction
+         name: TestReportProduction1
          path: TestReportProduction.txt
