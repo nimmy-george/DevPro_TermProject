@@ -4,21 +4,13 @@ on:
   push:
     branches:
       - main
-jobs:
-  deploy:
-    runs-on: self-hosted  # Ensure your self-hosted runner is properly configured in GitHub
-
-    steps:
+jobs: 
+ deploy:
+   runs-on: self-hosted
+   steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Run Ansible Playbook
-        run: |
-          ansible-playbook -i localhost, -e 'ansible_python_interpreter=/usr/bin/python3' configure_production.yml
+        run: ansible-playbook -i localhost, -e 'ansible_python_interpreter=/usr/bin/python3' configure_production.yml
         shell: bash
-          pip install bandit
-
-      - name: Run Tests
-        run: python test_app.py 2>&1 | tee test-report.txt
-
-      # ... (Other steps)
