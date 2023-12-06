@@ -17,11 +17,12 @@ jobs:
     - name: Install dependencies
       uses: ./.github/actions/install-dependencies
 
-    - name: methods install
+    - name: Install Flask and Flask-SQLAlchemy
       run: |
-          pip install flask
-          pip install black
-          pip install bandit
+        pip install flask
+        pip install flask-sqlalchemy
+        pip install black
+        pip install bandit
                 
     - name: Run Tests
       run: python test_app.py 2>&1 | tee test-report.txt
