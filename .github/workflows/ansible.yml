@@ -5,22 +5,17 @@ on:
     branches:
       - main
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted  # Ensure your self-hosted runner is properly configured in GitHub
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
-
-      - name: Configure Staging with Ansible
-        run: ansible-playbook -i 'StagingEnvironment,' -e 'ansible_python_interpreter=/usr/bin/python3' configure_staging.yml
-
-      - name: methods install
+      - name: Run Ansible Playbook
         run: |
-          pip install black
+          ansible-playbook -i localhost, -e 'ansible_python_interpreter=/usr/bin/python3' configure_production.yml
+        shell: bash
           pip install bandit
 
       - name: Run Tests
