@@ -9,13 +9,6 @@
         update_cache: yes
       when: ansible_os_family == 'Debian'
 
-    - name: Configure Users
-      user:
-        name: john
-        state: present
-        groups: wheel
-      become: yes
-
     - name: Create Directories
       file:
         path: "/opt/myapp"
@@ -34,11 +27,22 @@
         mode: 0644
       become: yes
 
+    - name: Ensure 'wheel' Group Exists
+      group:
+        name: wheel
+        state: present
+      become: yes
+
+    - name: Configure Users
+      user:
+        name: john
+        state: present
+        groups: wheel
+      become: yes
+
     - name: Restart Application Service
       systemd:
         name: myapp.service
         state: restarted
       become: yes
       when: ansible_os_family == 'Debian'
-
-    # Add more tasks as needed
