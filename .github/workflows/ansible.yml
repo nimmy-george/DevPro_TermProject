@@ -1,0 +1,29 @@
+name: ansible
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Configure Staging with Ansible
+        run: ansible-playbook -i 'StagingEnvironment,' -e 'ansible_python_interpreter=/usr/bin/python3' configure_staging.yml
+
+      - name: methods install
+        run: |
+          pip install black
+          pip install bandit
+
+      - name: Run Tests
+        run: python test_app.py 2>&1 | tee test-report.txt
+
+      # ... (Other steps)
