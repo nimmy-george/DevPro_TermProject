@@ -11,6 +11,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
       - name: Run Ansible Playbook
         run: ansible-playbook -i localhost, -e 'ansible_python_interpreter=/usr/bin/python3' configure_production.yml
         shell: bash
