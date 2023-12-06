@@ -16,10 +16,7 @@ jobs:
     # #Using CUSTOM ACTIONS to install the requirements namely Python modules
     - name: Install dependencies
       uses: ./.github/actions/install-dependencies
-          pip install black
-          pip install bandit
-          pip install mypy
-      
+                
     - name: Run Tests
       run: python test_app.py 2>&1 | tee test-report.txt
 
