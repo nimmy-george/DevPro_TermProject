@@ -48,10 +48,10 @@ jobs:
       name: StagingEnvironment
     needs: code_test
     env:
-      DOCKER_REGISTRY: docker.pkg.github.com
-      DOCKER_USERNAME: nimmy-george
-      DOCKER_IMAGE: devpro_termproject/dockerimage
-      DOCKER_TAG: version
+      DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
+      DOCKER_TAG: ${{ secrets.DOCKER_TAG }}
 
     steps:
       - name: Checkout Repository
@@ -75,10 +75,10 @@ jobs:
    runs-on: self-hosted
    needs: deploy_staging
    env:
-      DOCKER_REGISTRY: docker.pkg.github.com
-      DOCKER_USERNAME: nimmy-george
-      DOCKER_IMAGE: devpro_termproject/dockerimage
-      DOCKER_TAG: version
+      DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
+      DOCKER_TAG: ${{ secrets.DOCKER_TAG }}
    steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
