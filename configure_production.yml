@@ -9,15 +9,6 @@
         update_cache: yes
       when: ansible_os_family == 'Debian'
 
-    - name: Install Necessary Packages
-      apt:
-        name: "{{ item }}"
-        state: present
-      loop:
-        - package1
-        - package2
-      when: ansible_os_family == 'Debian'
-
     - name: Configure Users
       user:
         name: john
