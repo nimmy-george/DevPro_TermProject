@@ -20,6 +20,7 @@ jobs:
     - name: methods install
       run: |
           pip install black
+          pip install bandit
                 
     - name: Run Tests
       run: python test_app.py 2>&1 | tee test-report.txt
