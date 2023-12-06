@@ -40,9 +40,3 @@
         mode: 0755
       become: yes
 
-     - name: Restart Application Service
-      systemd:
-        name: myapp.service
-        state: restarted
-      become: yes
-      when: ansible_os_family == 'Debian'
