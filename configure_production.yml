@@ -1,5 +1,3 @@
-# configure_production.yml
-
 ---
 - name: Configure Production Environment
   hosts: localhost
@@ -9,6 +7,47 @@
     - name: Update Package Cache
       apt:
         update_cache: yes
-      when: ansible_os_family == 'Debian'  # Adjust for your OS family
+      when: ansible_os_family == 'Debian'
 
-    # Add more tasks as needed, such as installing packages, configuring users, etc.
+    - name: Install Necessary Packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - package1
+        - package2
+      when: ansible_os_family == 'Debian'
+
+    - name: Configure Users
+      user:
+        name: john
+        state: present
+        groups: wheel
+      become: yes
+
+    - name: Create Directories
+      file:
+        path: "/opt/myapp"
+        state: directory
+        owner: john
+        group: john
+        mode: 0755
+      become: yes
+
+    - name: Copy Configuration File
+      copy:
+        src: files/app-config.yml
+        dest: "/opt/myapp/app-config.yml"
+        owner: john
+        group: john
+        mode: 0644
+      become: yes
+
+    - name: Restart Application Service
+      systemd:
+        name: myapp.service
+        state: restarted
+      become: yes
+      when: ansible_os_family == 'Debian'
+
+    # Add more tasks as needed
