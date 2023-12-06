@@ -47,7 +47,7 @@ jobs:
 
     if: ${{ github.event.workflow_run.conclusion == 'success' }}    #creating seperating environment in GitHub
 
-    environment: Testing Environment  
+    environment: StagingEnvironment
     needs: code_test
     env:
       DOCKER_REGISTRY: docker.pkg.github.com
