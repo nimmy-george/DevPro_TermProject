@@ -70,3 +70,38 @@ jobs:
         with:
          name: TestReportStaging
          path: TestReportStaging.txt
+  
+  deploy_production:
+   runs-on: self-hosted
+   env:
+      DOCKER_REGISTRY: docker.pkg.github.com
+      DOCKER_USERNAME: nimmy-george
+      DOCKER_IMAGE: devpro_termproject/dockerimage
+      DOCKER_TAG: version
+   steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i localhost, -e 'ansible_python_interpreter=/usr/bin/python3' configure_production.yml
+        shell: bash
+        
+      - name: Configure Docker registry
+        run: |
+          echo "${{ secrets.DOCKER_REGISTRY_TOKEN }}" | sudo docker login -u "${DOCKER_USERNAME}" --password-stdin "${DOCKER_REGISTRY}"
+     
+      - name: Run Integration Tests
+        run: |
+          sudo docker pull "${DOCKER_REGISTRY}/${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}"
+          sudo docker run -it "${DOCKER_REGISTRY}/${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}" python -m unittest discover -s ./ -p 'test_app.py' 2>&1 | tee TestReportProduction.txt
+      
+      - name: Archive test report
+        uses: actions/upload-artifact@v2
+        with:
+         name: TestReportProduction1
+         path: TestReportProduction.txt
