@@ -40,16 +40,7 @@
         mode: 0755
       become: yes
 
-    - name: Copy Configuration File
-      copy:
-        src: files/app-config.yml
-        dest: "/opt/myapp/app-config.yml"
-        owner: john
-        group: john
-        mode: 0644
-      become: yes
-
-    - name: Restart Application Service
+     - name: Restart Application Service
       systemd:
         name: myapp.service
         state: restarted
