@@ -19,6 +19,7 @@ jobs:
 
     - name: methods install
       run: |
+          pip install flask
           pip install black
           pip install bandit
                 
