@@ -1,0 +1,12 @@
+---
+- name: Configure Staging Environment
+  hosts: StagingEnvironment
+  become: yes
+
+  tasks:
+    - name: Update packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    # Add more tasks as needed...
