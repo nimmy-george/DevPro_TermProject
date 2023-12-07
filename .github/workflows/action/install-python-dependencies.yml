@@ -2,11 +2,8 @@
 name: Install Dependencies
 
 on:
-  workflow_run:
-    workflows: [CodeTesting.yml]
-    types:
-      - pull_request
-      - push
+  - pull_request
+  - push
 
 jobs:
   install-dependencies:
