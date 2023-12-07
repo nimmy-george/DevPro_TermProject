@@ -21,7 +21,8 @@ class TestApp(unittest.TestCase):
 
     def test_home_page(self):
         response = self.app.get('/')
-        # Your test assertions for the home page
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'<h1>User List</h1>', response.data)
 
     def test_add_user(self):
         response = self.app.post('/add_user', data={'username': 'testuser', 'email': 'testuser@example.com'})
