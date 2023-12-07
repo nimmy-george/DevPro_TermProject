@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  code_test:
+  unit_test_and_code_test:
     runs-on: ubuntu-latest
 
     steps:
