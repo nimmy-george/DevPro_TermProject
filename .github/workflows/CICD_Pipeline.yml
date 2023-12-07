@@ -56,6 +56,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        
+         # #Using CUSTOM ACTIONS to install the requirements namely Python modules
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+        
       - name: Configure Docker registry
         run: |
           echo "${{ secrets.DOCKER_REGISTRY_TOKEN }}" | docker login -u "${DOCKER_USERNAME}" --password-stdin "${DOCKER_REGISTRY}"
@@ -82,6 +87,10 @@ jobs:
    steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      # #Using CUSTOM ACTIONS to install the requirements namely Python modules
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Install Ansible
         run: |
